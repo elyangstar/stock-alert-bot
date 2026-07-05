@@ -1,0 +1,31 @@
+name: Stock Alert Robot2
+
+on:
+  schedule:
+    # 1분마다 실행되도록 설정
+    - cron: '* * * * *'
+  workflow_dispatch: # 수동 실행 버튼 활성화
+
+jobs:
+  run-stock-bot:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 1. 내 코드 가져오기
+      uses: actions/checkout@v3
+
+    - name: 2. 파이썬 환경 설정
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: 3. 필수 도구 설치
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests beautifulsoup4 pandas ta openai lxml
+
+    - name: 4. 주식 로봇 실행 (금고에서 키 꺼내기)
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: python stock_robot.py
