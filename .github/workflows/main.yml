@@ -38,7 +38,7 @@ on:
   schedule:
     # 1분마다 실행되도록 설정
     - cron: '* * * * *'
-  workflow_dispatch: # 수동 실행 버튼 활성화
+  workflow_dispatch: # 수동 실행 버튼 활성화1
 
 jobs:
   run-stock-bot:
